@@ -1,0 +1,36 @@
+  - name: 'Aplicando as configurações'
+    template:
+      src: templates/zabbix_agentd2.j2
+      dest: /etc/zabbix/zabbix_agentd2.conf
+      owner: zabbix
+      group: zabbix
+      mode: 0644
+    when: ansible_os_family != "Windows"
+
+  - name: 'Alterando as permissões do arquivo'
+    file:
+      path: /etc/zabbix/
+      mode: 0775
+      owner: zabbix
+      group: zabbix 
+    when: ansible_os_family != "Windows" 
+
+  - name: 'Reiniciando o serviço do Zabbix Agent2'
+    systemd:
+      name: zabbix-agent2
+      state: restarted
+      enabled: yes
+    when: ansible_os_family != "Windows"
+
+#### WINDOWS ####
+  - name: 'Windows | Aplicando as configurações'
+    ansible.windows.win_template:
+      src: templates/zabbix_agent2_win.j2
+      dest: C:\Zabbix2\conf\zabbix_agent2.conf
+    when: ansible_os_family == "Windows"
+
+  - name: 'Windows | Reiniciando o serviço'
+    ansible.windows.win_service:
+      name: Zabbix Agent 2
+      state: restarted
+    when: ansible_os_family == "Windows"

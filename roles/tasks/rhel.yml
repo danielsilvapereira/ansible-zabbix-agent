@@ -1,0 +1,56 @@
+  - name: Desabilitando Selinux
+    selinux:
+     state: disabled
+
+  - name: Removendo Zabbix Agent antigo
+    become: true
+    dnf:
+      name:
+        - zabbix-agent
+      state: absent 
+    when: ansible_distribution_major_version == '8'
+
+  - name: 'Baixando o pacote do Zabbix {{ zabbix_release_version }} | Sistema Operacional: {{ansible_distribution}} - 8'
+    dnf:
+      disable_gpg_check: yes
+      name: 'https://repo.zabbix.com/zabbix/{{ zabbix_release_version }}/rhel/{{ansible_distribution_major_version}}/x86_64/zabbix-release-{{ zabbix_release_version }}-1.el8.noarch.rpm'
+      state: present
+    when: ansible_distribution_major_version == '8'
+
+  - name: 'Instalando Zabbix Agent2 | Sistema Operacional: {{ansible_distribution}} - 8'
+    dnf:
+     name: 
+        - zabbix-agent2
+        - zabbix-get
+        - zabbix-sender
+     enablerepo: zabbix
+     update_cache: true
+     state: latest
+    when: ansible_distribution_major_version == '8'
+
+  - name: 'Baixando o pacote do Zabbix {{ zabbix_release_version }} | Sistema Operacional: {{ansible_distribution}} - 8'
+    yum:
+      disable_gpg_check: true
+      name: 'https://repo.zabbix.com/zabbix/{{ zabbix_release_version }}/rhel/{{ansible_distribution_major_version}}/x86_64/zabbix-release-{{ zabbix_release_version }}-1.el8.noarch.rpm'
+      state: present
+    when: ansible_distribution_major_version == '7'
+ 
+  - name: 'Instalando Zabbix Agent2 | Sistema Operacional: {{ansible_distribution}} - 7'
+    yum:
+     name:
+        - zabbix-agent2
+        - zabbix-get
+        - zabbix-sender 
+    when: ansible_distribution_major_version == '7'
+
+  - name: Liberando as portas no firewalld
+    firewalld:
+      port: 10050/tcp
+      permanent: yes
+      state: enabled
+  
+  - name: Reiniciando o firewalld
+    systemd:
+      name: firewalld
+      state: reloaded
+      enabled: yes  
