@@ -1,8 +1,8 @@
-  - name: Desabilitando Selinux
+  - name: 'Colocando o Selinux em modo permissive'
     selinux:
-     state: disabled
+     state: permissive
 
-  - name: Removendo Zabbix Agent antigo
+  - name: 'Removendo Zabbix Agent antigo'
     become: true
     dnf:
       name:
@@ -10,10 +10,18 @@
       state: absent 
     when: ansible_distribution_major_version == '8'
 
+  - name: 'Removendo Zabbix Agent antigo'
+    become: true
+    yum:
+      name:
+        - zabbix-agent
+      state: absent 
+    when: ansible_distribution_major_version == '7'
+
   - name: 'Baixando o pacote do Zabbix {{ zabbix_release_version }} | Sistema Operacional: {{ansible_distribution}} - 8'
     dnf:
       disable_gpg_check: yes
-      name: 'https://repo.zabbix.com/zabbix/{{ zabbix_release_version }}/rhel/{{ansible_distribution_major_version}}/x86_64/zabbix-release-{{ zabbix_release_version }}-1.el8.noarch.rpm'
+      name: 'https://repo.zabbix.com/zabbix/{{ zabbix_release_version }}/rhel/{{ansible_distribution_major_version}}/x86_64/zabbix-release-{{ zabbix_full_version }}.el{{ansible_distribution_major_version}}.noarch.rpm'
       state: present
     when: ansible_distribution_major_version == '8'
 
@@ -31,7 +39,7 @@
   - name: 'Baixando o pacote do Zabbix {{ zabbix_release_version }} | Sistema Operacional: {{ansible_distribution}} - 8'
     yum:
       disable_gpg_check: true
-      name: 'https://repo.zabbix.com/zabbix/{{ zabbix_release_version }}/rhel/{{ansible_distribution_major_version}}/x86_64/zabbix-release-{{ zabbix_release_version }}-1.el8.noarch.rpm'
+      name: 'https://repo.zabbix.com/zabbix/{{ zabbix_release_version }}/rhel/{{ansible_distribution_major_version}}/x86_64/zabbix-release-{{ zabbix_full_version }}.el{{ansible_distribution_major_version}}.noarch.rpm'
       state: present
     when: ansible_distribution_major_version == '7'
  
@@ -43,13 +51,13 @@
         - zabbix-sender 
     when: ansible_distribution_major_version == '7'
 
-  - name: Liberando as portas no firewalld
+  - name: 'Liberando as portas no firewalld'
     firewalld:
       port: 10050/tcp
       permanent: yes
       state: enabled
   
-  - name: Reiniciando o firewalld
+  - name: 'Reiniciando o firewalld'
     systemd:
       name: firewalld
       state: reloaded
