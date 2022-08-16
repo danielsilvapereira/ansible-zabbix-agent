@@ -1,7 +1,8 @@
+#### LINUX #####
   - name: 'Aplicando as configurações'
     template:
-      src: templates/zabbix_agentd2.j2
-      dest: /etc/zabbix/zabbix_agentd2.conf
+      src: templates/zabbix_agent2_linux.j2
+      dest: /etc/zabbix/zabbix_agent2_linux.conf
       owner: zabbix
       group: zabbix
       mode: 0644
