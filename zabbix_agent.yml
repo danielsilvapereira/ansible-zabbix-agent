@@ -1,11 +1,13 @@
 ---
 - name: Deploy do Zabbix Agent2
-  hosts: "{{ grupo }}"
+  hosts: all
   become: true
+  gather_facts: yes
   vars:
     - zabbix_major_version: 6.0
     - zabbix_full_version: 6.0-1
     - server: 
+    - serveractive: 
   
   roles:
     - zabbixagent
