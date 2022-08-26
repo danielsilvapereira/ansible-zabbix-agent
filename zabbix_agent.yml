@@ -2,7 +2,7 @@
 - name: Deploy do Zabbix Agent2
   hosts: all
   become: true
-  gather_facts: no
+  gather_facts: true
   vars:
     - zabbix_major_version: 6.0
     - zabbix_full_version: 6.0-1
