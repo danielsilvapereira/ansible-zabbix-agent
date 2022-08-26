@@ -14,5 +14,5 @@
 
   post_tasks:
     - include_role:
-        name: zabbixagent
+        name: zabbix_agent
         tasks_from: config.yml
