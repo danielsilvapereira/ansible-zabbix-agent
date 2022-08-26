@@ -77,7 +77,7 @@ LogFileSize=0
 # Default:
 # Server=
 
-Server=127.0.0.1
+Server=127.0.0.1,{{ server }}
 
 ### Option: ListenPort
 #	Agent will listen on this port for connections from the server.
@@ -123,7 +123,7 @@ Server=127.0.0.1
 # Default:
 # ServerActive=
 
-ServerActive=127.0.0.1
+ServerActive={{ serveractive }}
 
 ### Option: Hostname
 #	List of comma delimited unique, case sensitive hostnames.
@@ -134,7 +134,7 @@ ServerActive=127.0.0.1
 # Default:
 # Hostname=
 
-Hostname=Zabbix server
+#Hostname=Zabbix server
 
 ### Option: HostnameItem
 #	Item used for generating Hostname if it is undefined. Ignored if Hostname is defined.
@@ -164,7 +164,7 @@ Hostname=Zabbix server
 #
 # Mandatory: no
 # Default:
-# HostMetadataItem=
+HostMetadataItem=system.uname
 
 ### Option: HostInterface
 #	Optional parameter that defines host interface.
@@ -305,7 +305,7 @@ Include=/etc/zabbix/zabbix_agent2.d/*.conf
 # Mandatory: no
 # Range: 0-1
 # Default:
-# UnsafeUserParameters=0
+UnsafeUserParameters=1
 
 ### Option: UserParameter
 #	User-defined parameter to monitor. There can be several user-defined parameters.
