@@ -4,11 +4,12 @@
       state: permissive
 
   - name: 'Removendo Zabbix Agent antigo'
+    become: true
     yum:
       name:
         - zabbix-agent
       state: absent 
-     become: true
+     
 
   - name: 'Baixando o pacote do Zabbix {{ zabbix_major_version }} | Sistema Operacional: {{ansible_distribution}} - {{ansible_distribution_major_version}}'
     yum:
