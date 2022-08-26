@@ -1,5 +1,5 @@
   - name: 'Colocando o Selinux em modo permissive'
-    ansible.posix.selinux:
+    selinux:
       policy: targeted
       state: permissive
 
