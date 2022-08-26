@@ -1,6 +1,7 @@
   - name: 'Colocando o Selinux em modo permissive'
-    selinux:
-     state: permissive
+    ansible.posix.selinux:
+      policy: targeted
+      state: permissive
 
   - name: 'Removendo Zabbix Agent antigo'
     become: true
