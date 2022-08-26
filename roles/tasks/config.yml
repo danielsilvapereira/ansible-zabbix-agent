@@ -16,11 +16,10 @@
       group: zabbix 
     when: ansible_os_family != "Windows" 
 
-  - name: 'Reiniciando o serviço do Zabbix Agent2'
-    systemd:
-      name: zabbix-agent2
-      state: restarted
-      enabled: yes
+  - name: 'Iniciando o serviço do Zabbix-Agent2'
+    ansible.builtin.service:
+        name: zabbix-agen2
+        state: restarted
     when: ansible_os_family != "Windows"
 
 #### WINDOWS ####
