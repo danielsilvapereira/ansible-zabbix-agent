@@ -10,7 +10,7 @@
     - serveractive: 
   
   roles:
-    - zabbixagent
+    - zabbix_agent
 
   post_tasks:
     - include_role:
