@@ -9,7 +9,6 @@
       name:
         - zabbix-agent
       state: absent 
-     
 
   - name: 'Baixando o pacote do Zabbix {{ zabbix_major_version }} | Sistema Operacional: {{ansible_distribution}} - {{ansible_distribution_major_version}}'
     yum:
@@ -21,11 +20,9 @@
     yum:
      name:
         - zabbix-agent2
-        - zabbix-get
-        - zabbix-sender 
 
   - name: 'Liberando as portas no firewalld'
-    firewalld:
+    ansible.posix.firewalld:
       port: 10050/tcp
       permanent: yes
       state: enabled
