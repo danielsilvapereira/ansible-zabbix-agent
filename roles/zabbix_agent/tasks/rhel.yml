@@ -1,7 +1,7 @@
-  - name: 'Desabilitando o Selinux'
-    ansible.posix.selinux:
-      policy: targeted
-      state: disabled
+  #- name: 'Desabilitando o Selinux'
+  #  ansible.posix.selinux:
+  #    policy: targeted
+  #    state: disabled
 
   - name: 'Removendo Zabbix Agent antigo'
     become: true
