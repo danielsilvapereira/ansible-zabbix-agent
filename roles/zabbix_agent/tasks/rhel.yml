@@ -1,7 +1,7 @@
-  #- name: 'Desabilitando o Selinux'
-  #  ansible.posix.selinux:
-  #    policy: targeted
-  #    state: disabled
+  - name: 'Desabilitando o Selinux'
+    ansible.posix.selinux:
+      policy: targeted
+      state: disabled
 
   - name: 'Removendo Zabbix Agent antigo'
     become: true
@@ -21,11 +21,11 @@
      name:
         - zabbix-agent2
 
-#  - name: 'Liberando as portas no firewalld'
-#    ansible.posix.firewalld:
-#      port: 10050/tcp
-#      permanent: yes
-#      state: enabled
+  - name: 'Liberando as portas no firewalld'
+    ansible.posix.firewalld:
+      port: 10050/tcp
+      permanent: yes
+      state: enabled
   
   - name: 'Reiniciando o firewalld'
     systemd:
