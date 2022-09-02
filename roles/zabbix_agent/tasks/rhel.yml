@@ -1,7 +1,7 @@
   - name: 'Colocando o Selinux em modo permissive'
     selinux:
       policy: targeted
-      state: permissive
+      state: disabled
 
   - name: 'Removendo Zabbix Agent antigo'
     become: true
