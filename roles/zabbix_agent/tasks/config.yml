@@ -23,13 +23,13 @@
     when: ansible_os_family != "Windows"
 
 #### WINDOWS ####
-  - name: 'Windows | Aplicando as configurações'
+  - name: 'Windows: Aplicando as configurações'
     ansible.windows.win_template:
       src: templates/zabbix_agent2_win.j2
       dest: C:\Zabbix2\conf\zabbix_agent2.conf
     when: ansible_os_family == "Windows"
 
-  - name: 'Windows | Reiniciando o serviço'
+  - name: 'Windows: Reiniciando o serviço'
     ansible.windows.win_service:
       name: Zabbix Agent 2
       state: restarted
