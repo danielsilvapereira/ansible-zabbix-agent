@@ -19,7 +19,7 @@
   - name: 'Iniciando o serviço do Zabbix-Agent2'
     ansible.builtin.service:
         name: zabbix-agent2
-        state: restarted
+        state: started
     when: ansible_os_family != "Windows"
 
 #### WINDOWS ####
