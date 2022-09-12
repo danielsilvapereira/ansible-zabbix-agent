@@ -1,6 +1,5 @@
   - name: 'Desabilitando o Selinux'
     selinux:
-      policy: targeted
       state: disabled
 
   - name: 'Removendo Zabbix Agent antigo'
