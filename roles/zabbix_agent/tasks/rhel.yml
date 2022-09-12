@@ -1,5 +1,5 @@
   - name: 'Desabilitando o Selinux'
-    ansible.posix.selinux:
+    selinux:
       policy: targeted
       state: disabled
 
@@ -15,14 +15,15 @@
       disable_gpg_check: true
       name: 'https://repo.zabbix.com/zabbix/{{ zabbix_major_version }}/rhel/{{ansible_distribution_major_version}}/x86_64/zabbix-release-{{ zabbix_full_version }}.el{{ansible_distribution_major_version}}.noarch.rpm'
       state: present
+      validate_certs: no
  
   - name: 'Instalando Zabbix Agent2 | Sistema Operacional: {{ansible_distribution}} - {{ansible_distribution_major_version}}'
     yum:
-     name:
-        - zabbix-agent2
+      name: zabbix-agent2
+      state: latest
 
   - name: 'Liberando as portas no firewalld'
-    ansible.posix.firewalld:
+    firewalld:
       port: 10050/tcp
       permanent: yes
       state: enabled
@@ -32,8 +33,3 @@
       name: firewalld
       state: reloaded
       enabled: yes 
-
-  - name: 'Iniciando o serviço do Zabbix-Agent2'
-    ansible.builtin.service:
-        name: zabbix-agent2
-        state: started
